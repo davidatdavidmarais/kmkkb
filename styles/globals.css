@@ -59,8 +59,7 @@ body {
   transform: translateX(40px) translateY(10px) rotate(15deg);
 }
 .left .thumb-3 {
-  transform: translateX(30px) translateY(20px) rotate(-60deg);
-  width: 100px;
+  transform: translateX(35px) translateY(35px) rotate(20deg);
 }
 .right .col-4 {
   transform: translateY(-15px);
@@ -72,8 +71,7 @@ body {
   transform: translateY(-15px);
 }
 .right .thumb-1 {
-  transform: translateX(-70px) translateY(20px) rotate(60deg);
-  width: 100px;
+  transform: translateX(-35px) translateY(35px) rotate(-20deg);
 }
 .right .thumb-2 {
   transform: translateX(-40px) translateY(10px) rotate(-15deg);

@@ -40,9 +40,9 @@ function LeftBoard() {
                     <Cap col={5} row={3} />
                     <Cap col={6} row={3} />
 
-                    <Cap col={1} row={4} classes={"invisible"} />
-                    <Cap col={2} row={4} classes={"invisible"} />
-                    <Cap col={3} row={4} classes={"invisible"} />
+                    <Cap col={1} row={4} />
+                    <Cap col={2} row={4} />
+                    <Cap col={3} row={4} />
                     <Cap col={4} row={4} classes={"thumb-1"} />
                     <Cap col={5} row={4} classes={"thumb-2"} />
                     <Cap col={6} row={4} classes={"thumb-3"} />
@@ -74,12 +74,12 @@ function RightBoard() {
                 <Cap col={5} row={3} />
                 <Cap col={6} row={3} />
 
-                <Cap col={4} row={4} classes={"thumb-1"} />
-                <Cap col={5} row={4} classes={"thumb-2"} />
-                <Cap col={6} row={4} classes={"thumb-3"} />
-                <Cap col={1} row={4} classes={"invisible"} />
-                <Cap col={2} row={4} classes={"invisible"} />
-                <Cap col={3} row={4} classes={"invisible"} />
+                <Cap col={1} row={4} classes={"thumb-1"} />
+                <Cap col={2} row={4} classes={"thumb-2"} />
+                <Cap col={3} row={4} classes={"thumb-3"} />
+                <Cap col={4} row={4} />
+                <Cap col={5} row={4} />
+                <Cap col={6} row={4} />
             </div>
     )
 }
