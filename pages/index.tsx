@@ -3,12 +3,17 @@ import SearchComponent from "@/components/SearchComponent";
 
 function Cap(params:{col: number, row: number, classes?: string}) {
     const [value, setValue] = useState("");
+    const [tabIndex, setTabIndex] = useState(1);
 
     function handleClick() {
-        setValue("X");
+        setTabIndex(0);
     }
 
-    return <div className={`cap col-${params.col} row-${params.row} ${params.classes}`} onClick={handleClick}>{value}</div>;
+    function handleKeyPressed(e: any) {
+        setValue(e.key);
+    }
+
+    return <div className={`cap col-${params.col} row-${params.row} ${params.classes}`} onKeyDown={handleKeyPressed} onClick={handleClick} tabIndex={tabIndex}>{value}</div>;
 }
 
 function LeftBoard() {
