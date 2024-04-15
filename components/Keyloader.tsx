@@ -5,7 +5,7 @@ const kmkKeys = [
     },
     {
         "value": "KC.TRNS",
-        "label": "Use the next lowest non-transparent key"
+        "label": "Transparent"
     },
     {
         "value": "KC.A",

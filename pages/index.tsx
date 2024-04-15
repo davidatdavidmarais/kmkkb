@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import SearchComponent from "@/components/SearchComponent";
+import InputBox from "@/components/InputBox";
 
 function Cap(params:{col: number, row: number, classes?: string}) {
     const [value, setValue] = useState("");
@@ -85,11 +86,18 @@ function RightBoard() {
 }
 
 export default function Boards() {
+    const [input, setInput] = useState<string>("")
+
     return (
-        <div className={"boards"}>
-            <LeftBoard></LeftBoard>
-            <SearchComponent></SearchComponent>
-            <RightBoard></RightBoard>
-        </div>
+        <div className={"home"}>
+            <div className={"boards"}>
+                <LeftBoard></LeftBoard>
+                <SearchComponent></SearchComponent>
+                <RightBoard></RightBoard>
+            </div>
+            <div className={"inputbox"}>
+                <InputBox setInput={setInput}></InputBox>
+            </div>
+      </div>
     );
 }

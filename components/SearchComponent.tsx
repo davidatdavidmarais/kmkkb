@@ -13,6 +13,7 @@ const HackerNewsStoriesWithSearch = () => {
     const [loading, setLoading] = useState<boolean>(true);
     const [keyword, setKeyword] = useState<string>('');
 
+
     const fetchKeys = async () => {
         let keys: Key[] = kmkKeys
         setKeys(keys)
@@ -34,7 +35,7 @@ const HackerNewsStoriesWithSearch = () => {
 
     return (
         <> { /* React fragment */}
-            <div className="wrapper">
+            <div className="search-component">
                 <h2>Keys</h2>
                 {loading && <div>Loading keys...</div>}
                 <SearchBar keyword={keyword} handleSearch={updateKeyword}/>

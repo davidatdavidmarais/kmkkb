@@ -24,6 +24,20 @@ body {
   display: flex;
 }
 
+.inputbox {
+  display: flex;
+  border: 1px solid  black;
+}
+
+.search-component {
+  display: grid;
+  height: 500px;
+}
+
+.keys {
+  overflow: scroll;
+}
+
 .board {
   display: grid;
   grid-template-columns: 60px 60px 60px 60px 60px 60px;
@@ -78,4 +92,8 @@ body {
 }
 .right .thumb-3 {
   transform: translateX(-40px);
+}
+.key-wrapper {
+  background: darkgrey;
+  border: 2px solid black;
 }
