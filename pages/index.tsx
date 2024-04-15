@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import SearchComponent from "@/components/SearchComponent";
 
 function Cap(params:{col: number, row: number, classes?: string}) {
     const [value, setValue] = useState("");
@@ -82,6 +83,7 @@ export default function Boards() {
     return (
         <div className={"boards"}>
             <LeftBoard></LeftBoard>
+            <SearchComponent></SearchComponent>
             <RightBoard></RightBoard>
         </div>
     );
