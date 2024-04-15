@@ -29,6 +29,7 @@ body {
   grid-template-columns: 60px 60px 60px 60px 60px 60px;
   grid-gap: 20px;
   margin: 150px 100px 150px 100px;
+  height: 300px;
 }
 .cap {
   border: 2px solid black;
