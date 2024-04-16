@@ -66,6 +66,13 @@ export default function Index() {
         setCurrentLayer(tempBoards.Layer.length - 1);
     }
 
+    function removeLayer() {
+        let tempBoards = {...boards};
+        tempBoards.Layer.splice(currentLayer, 1);
+        setBoards(tempBoards);
+        setCurrentLayer(0);
+    }
+
     function getValue(): string {
         if (currentKey === undefined) {
             return "";
@@ -147,13 +154,16 @@ export default function Index() {
                 <button className={"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"}
                         onClick={addLayer}>Add Layer
                 </button>
+                <button className={"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"}
+                        onClick={removeLayer}>Remove Layer
+                </button>
             </div>
             <div>
                 Current Key Value:
                 <input value={getValue()} onChange={updateKey}/>
             </div>
             <div>
-            <button className={"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"} onClick={save}>Save Config</button>
+                <button className={"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"} onClick={save}>Save Config</button>
             </div>
         </div>
     );
