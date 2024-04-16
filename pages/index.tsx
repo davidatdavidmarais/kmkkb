@@ -2,7 +2,7 @@ import {useEffect, useState} from 'react';
 import SearchComponent from "@/components/SearchComponent";
 import InputBox from "@/components/InputBox";
 import {CorneDefaultLeftBoard, CorneDefaultRightBoard} from "@/domain/boards/corne";
-import {Board as BoardType} from "@/domain/types"
+import {Board as BoardType, BoardsConfig} from "@/domain/types"
 import Board from "@/components/Board";
 import {Key} from "@/domain/types";
 import {CurrentKey} from "@/pages/types";
@@ -10,28 +10,32 @@ import {CurrentKey} from "@/pages/types";
 export default function Index() {
     const [input, setInput] = useState<string>("")
 
+    const [currentLayer, setCurrentLayer] = useState<number>(0);
     const [currentKey, setCurrentKey] = useState<CurrentKey | undefined>(undefined)
-    const [leftBoard, setLeftBoard] = useState<BoardType>(CorneDefaultLeftBoard)
-    const [rightBoard, setRightBoard] = useState<BoardType>(CorneDefaultRightBoard)
-
+    const [boards, setBoards] = useState<BoardsConfig>({
+        Layer: [{
+            Left: CorneDefaultLeftBoard,
+            Right: CorneDefaultRightBoard,
+        }]
+    })
 
     useEffect(() => {
         load();
     }, []);
 
     function handleKeyDown(left: boolean, keyIndex: number, keyCode: string) {
-        var board:BoardType;
+        let tempBoards:BoardsConfig;
 
         if (left) {
-            board = {...leftBoard};
-            board.Keys = board.Keys.slice()
-            board.Keys[keyIndex].Value = keyCode;
-            setLeftBoard(board);
+            tempBoards = {...boards};
+            tempBoards.Layer[currentLayer].Left.Keys = tempBoards.Layer[currentLayer].Left.Keys.slice()
+            tempBoards.Layer[currentLayer].Left.Keys[keyIndex].Value = keyCode;
+            setBoards(tempBoards);
         } else {
-            board = {...rightBoard};
-            board.Keys = board.Keys.slice()
-            board.Keys[keyIndex].Value = keyCode;
-            setRightBoard(board);
+            tempBoards = {...boards};
+            tempBoards.Layer[currentLayer].Right.Keys = tempBoards.Layer[currentLayer].Right.Keys.slice()
+            tempBoards.Layer[currentLayer].Right.Keys[keyIndex].Value = keyCode;
+            setBoards(tempBoards);
         }
     }
 
@@ -42,16 +46,26 @@ export default function Index() {
         })
     }
 
+    function addLayer() {
+        let tempBoards = {...boards};
+        tempBoards.Layer.push({
+            Left: CorneDefaultLeftBoard,
+            Right: CorneDefaultRightBoard,
+        })
+        setBoards(tempBoards);
+        setCurrentLayer(tempBoards.Layer.length - 1);
+    }
+
     function getValue(): string {
         if (currentKey === undefined) {
             return "";
         }
 
         if (currentKey?.Left) {
-            return leftBoard.Keys[currentKey.Index].Value;
+            return boards.Layer[currentLayer].Left.Keys[currentKey.Index].Value;
         }
 
-        return rightBoard.Keys[currentKey.Index].Value;
+        return boards.Layer[currentLayer].Right.Keys[currentKey.Index].Value;
     }
 
     function setValue(value: string) {
@@ -60,25 +74,22 @@ export default function Index() {
         }
 
         if (currentKey?.Left) {
-            let board = {...leftBoard};
-            board.Keys = board.Keys.slice()
-            board.Keys[currentKey.Index].Value = value;
-            setLeftBoard(board);
+            let tempBoards = {...boards};
+            tempBoards.Layer[currentLayer].Left.Keys = tempBoards.Layer[currentLayer].Left.Keys.slice()
+            tempBoards.Layer[currentLayer].Left.Keys[currentKey.Index].Value = value;
+            setBoards(tempBoards);
             return;
         }
 
-        let board = {...rightBoard};
-        board.Keys = board.Keys.slice()
-        board.Keys[currentKey.Index].Value = value;
-        setRightBoard(board);
+        let tempBoards = {...boards};
+        tempBoards.Layer[currentLayer].Right.Keys = tempBoards.Layer[currentLayer].Right.Keys.slice()
+        tempBoards.Layer[currentLayer].Right.Keys[currentKey.Index].Value = value;
+        setBoards(tempBoards);
         return;
     }
 
     function save() {
-        localStorage.setItem("boardconfig", JSON.stringify({
-            left: leftBoard,
-            right: rightBoard
-        }))
+        localStorage.setItem("boardconfig", JSON.stringify(boards))
     }
 
     function load() {
@@ -88,8 +99,7 @@ export default function Index() {
         }
 
         const config = JSON.parse(ls);
-        setLeftBoard(config.left);
-        setRightBoard(config.right);
+        setBoards(config);
         setCurrentKey(undefined);
     }
 
@@ -98,23 +108,43 @@ export default function Index() {
         setValue(e.target.value);
     }
 
+    function changeLayer(layer: number) {
+        console.log(layer);
+        setCurrentLayer(layer);
+    }
+
     return (
         <div className={"home"}>
             <div className={"boards"}>
-                <Board classes={"board left"} board={leftBoard} onKeyDown={handleKeyDown} onClick={handleClick}></Board>
+                <Board classes={"board left"} board={boards.Layer[currentLayer].Left} onKeyDown={handleKeyDown} onClick={handleClick}></Board>
                 <SearchComponent></SearchComponent>
-                <Board classes={"board right"} board={rightBoard} onKeyDown={handleKeyDown}
+                <Board classes={"board right"} board={boards.Layer[currentLayer].Right} onKeyDown={handleKeyDown}
                        onClick={handleClick}></Board>
             </div>
             <div className={"inputbox"}>
                 <InputBox setInput={setInput}></InputBox>
             </div>
             <div>
+                Layers
+                {
+                    boards.Layer.map(function(value, index) {
+                        return (
+                            <div className={"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded inline cursor-pointer " + (currentLayer === index ? "bg-red-500 hover:bg-red-700 " : "bg-blue-500 hover:bg-blue-700")} key={index} onClick={function() {changeLayer(index)} }>{index + 1}</div>
+                        );
+                    })
+                }
+            </div>
+            <div>
+                <button className={"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"}
+                        onClick={addLayer}>Add Layer
+                </button>
+            </div>
+            <div>
                 Current Key Value:
                 <input value={getValue()} onChange={updateKey}/>
             </div>
             <div>
-                <button className={"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"} onClick={save}>Save Config</button>
+            <button className={"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"} onClick={save}>Save Config</button>
             </div>
         </div>
     );

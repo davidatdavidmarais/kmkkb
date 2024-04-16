@@ -1,3 +1,7 @@
+export type BoardsConfig = {
+    Layer: BoardConfig[]
+}
+
 export type BoardConfig = {
     Left: Board
     Right: Board
