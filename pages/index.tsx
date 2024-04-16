@@ -2,10 +2,11 @@ import {useEffect, useState} from 'react';
 import SearchComponent from "@/components/SearchComponent";
 import InputBox from "@/components/InputBox";
 import {CorneDefaultLeftBoard, CorneDefaultRightBoard} from "@/domain/boards/corne";
-import {Board as BoardType, BoardsConfig} from "@/domain/types"
+import {BoardsConfig} from "@/domain/types"
 import Board from "@/components/Board";
 import {Key} from "@/domain/types";
 import {CurrentKey} from "@/pages/types";
+import {Html2KMK} from "@/domain/kmk/Html2KMK";
 
 export default function Index() {
     const [input, setInput] = useState<string>("")
@@ -23,8 +24,17 @@ export default function Index() {
         load();
     }, []);
 
-    function handleKeyDown(left: boolean, keyIndex: number, keyCode: string) {
+    function handleKeyDown(left: boolean, keyIndex: number, e: any) {
         let tempBoards:BoardsConfig;
+        let keyCode = e.key;
+
+        const stringRep: string = e.key as string;
+        console.log(stringRep);
+        let mapped = Html2KMK.get(stringRep);
+        console.log(mapped);
+        if (mapped) {
+            keyCode = mapped;
+        }
 
         if (left) {
             tempBoards = {...boards};
@@ -109,7 +119,6 @@ export default function Index() {
     }
 
     function changeLayer(layer: number) {
-        console.log(layer);
         setCurrentLayer(layer);
     }
 
