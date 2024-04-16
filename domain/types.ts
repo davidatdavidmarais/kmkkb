@@ -1,8 +1,8 @@
 export type Board = {
-    Caps: Cap[]
+    Keys: Key[]
 }
 
-export type Cap = {
+export type Key = {
     Row: number
     Col: number
     Value: string

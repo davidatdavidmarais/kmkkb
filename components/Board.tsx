@@ -5,8 +5,8 @@ export default function Board(params: {board: BoardConfig, classes: string}) {
     return (
         <div className={params.classes}>
             {
-                params.board.Caps.map(function(cap, index) {
-                    return <Key key={index} col={cap.Col} row={cap.Row} classes={cap.Classes} />;
+                params.board.Keys.map(function(key, index) {
+                    return <Key key={index} col={key.Col} row={key.Row} classes={key.Classes} />;
                 })
             }
         </div>
