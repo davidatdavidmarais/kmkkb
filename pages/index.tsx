@@ -62,7 +62,12 @@ export default function Index() {
     }
 
     function load() {
-        const config = JSON.parse(localStorage.getItem('boardconfig') || '{}');
+        const ls = localStorage.getItem('boardconfig');
+        if (ls === null) {
+            return;
+        }
+
+        const config = JSON.parse(ls);
         setLeftBoard(config.left);
         setRightBoard(config.right);
         setCurrentKey(undefined);
