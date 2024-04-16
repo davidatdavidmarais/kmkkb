@@ -54,6 +54,26 @@ export default function Index() {
         return rightBoard.Keys[currentKey.Index].Value;
     }
 
+    function setValue(value: string) {
+        if (currentKey === undefined) {
+            return;
+        }
+
+        if (currentKey?.Left) {
+            let board = {...leftBoard};
+            board.Keys = board.Keys.slice()
+            board.Keys[currentKey.Index].Value = value;
+            setLeftBoard(board);
+            return;
+        }
+
+        let board = {...rightBoard};
+        board.Keys = board.Keys.slice()
+        board.Keys[currentKey.Index].Value = value;
+        setRightBoard(board);
+        return;
+    }
+
     function save() {
         localStorage.setItem("boardconfig", JSON.stringify({
             left: leftBoard,
@@ -73,6 +93,11 @@ export default function Index() {
         setCurrentKey(undefined);
     }
 
+    function updateKey(e: any) {
+        console.log(e.target.value);
+        setValue(e.target.value);
+    }
+
     return (
         <div className={"home"}>
             <div className={"boards"}>
@@ -86,7 +111,7 @@ export default function Index() {
             </div>
             <div>
                 Current Key Value:
-                <input value={getValue()}/>
+                <input value={getValue()} onChange={updateKey}/>
             </div>
             <div>
                 <button className={"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"} onClick={save}>Save Config</button>
