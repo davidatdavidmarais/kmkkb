@@ -1,6 +1,7 @@
 import {Board} from "@/domain/types";
 
 export const CorneDefaultLeftBoard: Board = {
+    Left: true,
     Keys: [
         {
             Row: 1,
@@ -132,6 +133,7 @@ export const CorneDefaultLeftBoard: Board = {
 }
 
 export const CorneDefaultRightBoard: Board = {
+    Left: false,
     Keys: [
         {
             Row: 1,

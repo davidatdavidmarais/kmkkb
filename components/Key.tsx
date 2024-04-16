@@ -1,16 +1,17 @@
 import {useState} from "react";
+import {Key as KeyType} from "@/domain/types";
 
-export default function Key(params:{col: number, row: number, classes?: string}) {
-    const [value, setValue] = useState("");
+export default function Key(params:{keyType: KeyType, col: number, row: number, classes?: string, onKeyDown: (keyCode: string) => void, onClick: () => void}) {
     const [tabIndex, setTabIndex] = useState(1);
 
     function handleClick() {
         setTabIndex(0);
+        params.onClick()
     }
 
     function handleKeyPressed(e: any) {
-        setValue(e.key);
+        params.onKeyDown(e.key);
     }
 
-    return <div className={`cap col-${params.col} row-${params.row} ${params.classes}`} onKeyDown={handleKeyPressed} onClick={handleClick} tabIndex={tabIndex}>{value}</div>;
+    return <div className={`cap col-${params.col} row-${params.row} ${params.classes}`} onKeyDown={handleKeyPressed} onClick={handleClick} tabIndex={tabIndex}>{params.keyType.Value}</div>;
 }

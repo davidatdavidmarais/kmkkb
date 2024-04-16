@@ -1,4 +1,5 @@
 export type Board = {
+    Left: boolean
     Keys: Key[]
 }
 
