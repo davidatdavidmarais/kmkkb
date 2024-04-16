@@ -141,29 +141,35 @@ export default function Index() {
             <div className={"inputbox"}>
                 <InputBox setInput={setInput}></InputBox>
             </div>
-            <div>
+            <div className={"m-4"}>
                 Layers
+            </div>
+            <div className={"m-4"}>
                 {
-                    boards.Layer.map(function(value, index) {
+                    boards.Layer.map(function (value, index) {
                         return (
-                            <div className={"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded inline cursor-pointer " + (currentLayer === index ? "bg-red-500 hover:bg-red-700 " : "bg-blue-500 hover:bg-blue-700")} key={index} onClick={function() {changeLayer(index)} }>{index + 1}</div>
+                            <div
+                                className={"mx-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded inline cursor-pointer " + (currentLayer === index ? "bg-red-500 hover:bg-red-700 " : "bg-blue-500 hover:bg-blue-700")}
+                                key={index} onClick={function () {
+                                changeLayer(index)
+                            }}>{index + 1}</div>
                         );
                     })
                 }
-            </div>
-            <div>
-                <button className={"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"}
-                        onClick={addLayer}>Add Layer
+                <button className={"mx-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"}
+                        onClick={addLayer}>+
                 </button>
-                <button className={"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"}
-                        onClick={removeLayer}>Remove Layer
+                <button className={"mx-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"}
+                        onClick={removeLayer}>-
                 </button>
             </div>
-            <div>
+            <div className={"m-4"}>
                 Current Key Value:
-                <input value={getValue()} onChange={updateKey}/>
             </div>
-            <div>
+            <div className={"m-4"}>
+                <input className={"font-bold border-4 border-blue-200 rounded"} value={getValue()} onChange={updateKey}/>
+            </div>
+            <div className={"m-4"}>
                 <button className={"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"} onClick={save}>Save Config</button>
             </div>
         </div>

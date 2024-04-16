@@ -49,4 +49,10 @@ Html2KMK.set("-", "KC.MINS");
 Html2KMK.set("_", "KC.LSFT(KC.MINS)");
 Html2KMK.set("=", "KC.EQL");
 Html2KMK.set("+", "KC.LSFT(KC.EQL)");
+Html2KMK.set("Control", "KC.LCTL");
+Html2KMK.set("Alt", "KC.LALT");
+Html2KMK.set("Meta", "KC.LGUI");
+Html2KMK.set("Shift", "KC.LSFT");
+Html2KMK.set("CapsLock", "KC.CAPS");
+
 
