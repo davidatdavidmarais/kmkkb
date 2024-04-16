@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import {useEffect, useState} from 'react';
 import SearchComponent from "@/components/SearchComponent";
 import InputBox from "@/components/InputBox";
 import {CorneDefaultLeftBoard, CorneDefaultRightBoard} from "@/domain/boards/corne";
@@ -13,6 +13,11 @@ export default function Index() {
     const [currentKey, setCurrentKey] = useState<CurrentKey | undefined>(undefined)
     const [leftBoard, setLeftBoard] = useState<BoardType>(CorneDefaultLeftBoard)
     const [rightBoard, setRightBoard] = useState<BoardType>(CorneDefaultRightBoard)
+
+
+    useEffect(() => {
+        load();
+    }, []);
 
     function handleKeyDown(left: boolean, keyIndex: number, keyCode: string) {
         var board:BoardType;
@@ -77,9 +82,6 @@ export default function Index() {
             <div>
                 Current Key Value:
                 <input value={getValue()}/>
-            </div>
-            <div>
-                <button className={"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"} onClick={load}>Load Config</button>
             </div>
             <div>
                 <button className={"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"} onClick={save}>Save Config</button>
