@@ -1,3 +1,8 @@
+export type BoardConfig = {
+    Left: Board
+    Right: Board
+}
+
 export type Board = {
     Left: boolean
     Keys: Key[]
