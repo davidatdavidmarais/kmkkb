@@ -28,9 +28,10 @@ export default function Index() {
         let tempBoards:BoardsConfig;
         let keyCode = e.key;
 
-        const stringRep: string = e.key as string;
-        console.log(stringRep);
-        let mapped = Html2KMK.get(stringRep);
+        console.log("keydown");
+        console.log(e);
+
+        let mapped = Html2KMK.get(keyCode);
         console.log(mapped);
         if (mapped) {
             keyCode = mapped;
