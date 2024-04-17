@@ -10,7 +10,7 @@ const KeyComponent = ({label, value, onSelectedItem}: Props) => {
     }
     return (
         <div className="key-wrapper">
-            <button onClick={() => testClick(value)}><b>{value}</b> ----&gt; {label}</button>
+            <button className={"text-left"} onClick={() => testClick(value)}><b>{value}</b> ----&gt; {label}</button>
         </div>
     );
 };
