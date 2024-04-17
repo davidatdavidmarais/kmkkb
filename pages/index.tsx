@@ -126,7 +126,7 @@ export default function Index() {
 
     async function copy() {
         let copyValues: string = `keyboard.keymap = [
-    `;
+`;
 
         let rowCount = 0;
         let colCount = 0;
@@ -140,11 +140,33 @@ export default function Index() {
             }
         }
 
+        let maxLength: number[] = Array(colCount*2).fill(0);
+        for (let i: number = 0; i < boards.Layer.length; i++) {
+            let leftIndex:number = 0;
+            let rightIndex:number = 0;
+            for (let r:number = 0; r < rowCount; r++) {
+                // Left
+                for (let lc: number = 0; lc < colCount; lc++) {
+                    if (maxLength[lc] <  boards.Layer[i].Left.Keys[leftIndex].Value.length + 2) {
+                        maxLength[lc] =  boards.Layer[i].Left.Keys[leftIndex].Value.length + 2
+                    }
+                    leftIndex++;
+                }
+                // Right
+                for (let rc:number = 0; rc < colCount; rc++) {
+                    if (maxLength[rc] <  boards.Layer[i].Right.Keys[rightIndex].Value.length + 2) {
+                        maxLength[rc] =  boards.Layer[i].Right.Keys[rightIndex].Value.length + 2
+                    }
+                    rightIndex++;
+                }
+            }
+        }
+
         // We only support split keyboards now.
         for (let i: number = 0; i < boards.Layer.length; i++) {
-            copyValues += `# Layer ${i+1}
-    ${createLayerCopy(rowCount, colCount, i)}${i == boards.Layer.length - 1 ? '' : ','}
-    `;
+            copyValues += `    # Layer ${i}
+    ${createLayerCopy(maxLength, rowCount, colCount, i)}${i == boards.Layer.length - 1 ? '' : ','}
+`;
         }
 
         copyValues += `]`
@@ -152,7 +174,7 @@ export default function Index() {
         await navigator.clipboard.writeText(copyValues);
     }
 
-    function createLayerCopy(rowCount: number, colCount: number, layerIndex: number): string {
+    function createLayerCopy(maxLength: number[], rowCount: number, colCount: number, layerIndex: number): string {
         let layerData = `[
     `;
 
@@ -165,13 +187,15 @@ export default function Index() {
                     layerData += `    `
                 }
                 layerData += `${boards.Layer[layerIndex].Left.Keys[leftIndex].Value},`
+                layerData += `${boards.Layer[layerIndex].Left.Keys[leftIndex].Value.length < maxLength[lc] ? Array(maxLength[lc] - boards.Layer[layerIndex].Left.Keys[leftIndex].Value.length).fill(' ').join('') : ''}`
                 leftIndex++;
             }
             // Right
             for (let rc:number = 0; rc < colCount; rc++) {
                 layerData += `${rc == 0 ? '                ' : '    '}${boards.Layer[layerIndex].Right.Keys[rightIndex].Value}`
-                if (r != rowCount - 1 && rc != colCount - 1) {
-                       layerData += `,`
+                if (rc != colCount - 1) {
+                    layerData += `,`
+                    layerData += `${boards.Layer[layerIndex].Right.Keys[rightIndex].Value.length < maxLength[rc] ? Array(maxLength[rc] - boards.Layer[layerIndex].Right.Keys[rightIndex].Value.length).fill(' ').join('') : ''}`
                 }
                 rightIndex++;
             }
