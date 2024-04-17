@@ -13,5 +13,5 @@ export default function Key(params:{keyType: KeyType, col: number, row: number, 
         params.onKeyDown(e);
     }
 
-    return <div className={`cap col-${params.col} row-${params.row} ${params.classes}`} onKeyDown={handleKeyPressed} onClick={handleClick} tabIndex={tabIndex}>{params.keyType.Value}</div>;
+    return <div className={`cap border-2 col-${params.col} row-${params.row} ${params.classes ? params.classes : ''} ${params.keyType.Selected ? 'border-blue-500' : 'border-black'}`} onKeyDown={handleKeyPressed} onClick={handleClick} tabIndex={tabIndex}>{params.keyType.Value}</div>;
 }

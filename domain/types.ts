@@ -17,4 +17,5 @@ export type Key = {
     Col: number
     Value: string
     Classes?: string
+    Selected: boolean
 }

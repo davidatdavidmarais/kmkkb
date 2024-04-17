@@ -1,10 +1,12 @@
-interface Key {
+interface Props {
     label: string;
     value: string;
+    onSelectedItem: (value: string)=> void
 }
-const KeyComponent = ({label, value}: Key) => {
+const KeyComponent = ({label, value, onSelectedItem}: Props) => {
     const testClick = (value: string) => {
         console.log(value)
+        onSelectedItem(value)
     }
     return (
         <div className="key-wrapper">

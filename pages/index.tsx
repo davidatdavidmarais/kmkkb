@@ -47,6 +47,24 @@ export default function Index() {
     }
 
     function handleClick(left: boolean, keyIndex: number, key: Key) {
+        let tempBoards = {...boards};
+        tempBoards.Layer[currentLayer].Left.Keys = tempBoards.Layer[currentLayer].Left.Keys.slice()
+        tempBoards.Layer[currentLayer].Right.Keys = tempBoards.Layer[currentLayer].Right.Keys.slice()
+        for (let i = 0; i < tempBoards.Layer.length; i++) {
+            for (let ii = 0; ii < tempBoards.Layer[i].Left.Keys.length; ii++) {
+                tempBoards.Layer[i].Left.Keys[ii].Selected = false
+                if (left && keyIndex == ii) {
+                    tempBoards.Layer[i].Left.Keys[ii].Selected = true
+                }
+            }
+            for (let ii = 0; ii < tempBoards.Layer[i].Right.Keys.length; ii++) {
+                tempBoards.Layer[i].Right.Keys[ii].Selected = false
+                if (!left && keyIndex == ii) {
+                    tempBoards.Layer[i].Right.Keys[ii].Selected = true
+                }
+            }
+        }
+        setBoards(tempBoards);
         setCurrentKey({
             Index: keyIndex,
             Left: left,
@@ -190,7 +208,7 @@ export default function Index() {
             <div className={"boards"}>
                 <Board classes={"board left"} board={boards.Layer[currentLayer].Left} onKeyDown={handleKeyDown}
                        onClick={handleClick}></Board>
-                <SearchComponent></SearchComponent>
+                <SearchComponent onSelectedItem={setValue}></SearchComponent>
                 <Board classes={"board right"} board={boards.Layer[currentLayer].Right} onKeyDown={handleKeyDown}
                        onClick={handleClick}></Board>
             </div>

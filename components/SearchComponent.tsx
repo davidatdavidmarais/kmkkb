@@ -7,7 +7,7 @@ interface Key {
     label: string,
     value: string,
 }
-const HackerNewsStoriesWithSearch = () => {
+const HackerNewsStoriesWithSearch = (props: {onSelectedItem: (value: string)=> void}) => {
     const [keys, setKeys] = useState<Key[]>([]);
     const [allKeys, setAllKeys] = useState<Key[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
@@ -41,7 +41,7 @@ const HackerNewsStoriesWithSearch = () => {
                 <SearchBar keyword={keyword} handleSearch={updateKeyword}/>
                 <div className="keys">
                     {  keys.map((k) => (
-                        <KeyComponent key={k.label} label={k.label} value={k.value}/>
+                        <KeyComponent onSelectedItem={props.onSelectedItem} key={k.label} label={k.label} value={k.value}/>
                     ))}
                 </div>
             </div>
