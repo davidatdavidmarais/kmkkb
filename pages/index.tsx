@@ -28,11 +28,7 @@ export default function Index() {
         let tempBoards:BoardsConfig;
         let keyCode = e.key;
 
-        console.log("keydown");
-        console.log(e);
-
         let mapped = Html2KMK.get(keyCode);
-        console.log(mapped);
         if (mapped) {
             keyCode = mapped;
         }
@@ -110,6 +106,66 @@ export default function Index() {
         localStorage.setItem("boardconfig", JSON.stringify(boards))
     }
 
+    async function copy() {
+        let copyValues: string = `keyboard.keymap = [
+    `;
+
+        let rowCount = 0;
+        let colCount = 0;
+
+        for (const k of boards.Layer[0].Left.Keys) {
+            if (k.Col > colCount) {
+                colCount = k.Col
+            }
+            if (k.Row > rowCount) {
+                rowCount = k.Row
+            }
+        }
+
+        // We only support split keyboards now.
+        for (let i: number = 0; i < boards.Layer.length; i++) {
+            copyValues += `# Layer ${i+1}
+    ${createLayerCopy(rowCount, colCount, i)}${i == boards.Layer.length - 1 ? '' : ','}
+    `;
+        }
+
+        copyValues += `]`
+
+        await navigator.clipboard.writeText(copyValues);
+    }
+
+    function createLayerCopy(rowCount: number, colCount: number, layerIndex: number): string {
+        let layerData = `[
+    `;
+
+        let leftIndex:number = 0;
+        let rightIndex:number = 0;
+        for (let r:number = 0; r < rowCount; r++) {
+            // Left
+            for (let lc:number = 0; lc < colCount; lc++) {
+                if (lc == 0) {
+                    layerData += `    `
+                }
+                layerData += `${boards.Layer[layerIndex].Left.Keys[leftIndex].Value},`
+                leftIndex++;
+            }
+            // Right
+            for (let rc:number = 0; rc < colCount; rc++) {
+                layerData += `${rc == 0 ? '                ' : '    '}${boards.Layer[layerIndex].Right.Keys[rightIndex].Value}`
+                if (r != rowCount - 1 && rc != colCount - 1) {
+                       layerData += `,`
+                }
+                rightIndex++;
+            }
+            layerData += `${r == rowCount - 1 ? '' : ','}
+    `
+        }
+
+        layerData += `]`
+
+        return layerData;
+    }
+
     function load() {
         const ls = localStorage.getItem('boardconfig');
         if (ls === null) {
@@ -122,7 +178,6 @@ export default function Index() {
     }
 
     function updateKey(e: any) {
-        console.log(e.target.value);
         setValue(e.target.value);
     }
 
@@ -133,7 +188,8 @@ export default function Index() {
     return (
         <div className={"home"}>
             <div className={"boards"}>
-                <Board classes={"board left"} board={boards.Layer[currentLayer].Left} onKeyDown={handleKeyDown} onClick={handleClick}></Board>
+                <Board classes={"board left"} board={boards.Layer[currentLayer].Left} onKeyDown={handleKeyDown}
+                       onClick={handleClick}></Board>
                 <SearchComponent></SearchComponent>
                 <Board classes={"board right"} board={boards.Layer[currentLayer].Right} onKeyDown={handleKeyDown}
                        onClick={handleClick}></Board>
@@ -167,10 +223,18 @@ export default function Index() {
                 Current Key Value:
             </div>
             <div className={"m-4"}>
-                <input className={"font-bold border-4 border-blue-200 rounded"} value={getValue()} onChange={updateKey}/>
+                <input className={"font-bold border-4 border-blue-200 rounded"} value={getValue()}
+                       onChange={updateKey}/>
             </div>
             <div className={"m-4"}>
-                <button className={"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"} onClick={save}>Save Config</button>
+                <button className={"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"}
+                        onClick={save}>Save Config
+                </button>
+            </div>
+            <div className={"m-4"}>
+                <button className={"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"}
+                        onClick={copy}>Copy to clipboard
+                </button>
             </div>
         </div>
     );
