@@ -1,3 +1,5 @@
+import {Html} from "next/document";
+
 export const Html2KMK: Map<string, string> = new Map<string, string>();
 // Alphas
 Html2KMK.set("a", "KC.A");
@@ -46,9 +48,52 @@ Html2KMK.set("Backspace", "KC.BSPC");
 Html2KMK.set("Tab", "KC.TAB");
 Html2KMK.set(" ", "KC.SPC");
 Html2KMK.set("-", "KC.MINS");
-Html2KMK.set("_", "KC.LSFT(KC.MINS)");
+Html2KMK.set("_", "KC.UNDS");
 Html2KMK.set("=", "KC.EQL");
-Html2KMK.set("+", "KC.LSFT(KC.EQL)");
+Html2KMK.set("+", "KC.PLUS");
+Html2KMK.set("[", "KC.LBRC");
+Html2KMK.set("]", "KC.RBRC");
+Html2KMK.set("{", "KC.LCBR");
+Html2KMK.set("}", "KC.RCBR");
+Html2KMK.set("\\", "KC.BSLS");
+Html2KMK.set("|", "KC.PIPE");
+Html2KMK.set(";", "KC.SCLN");
+Html2KMK.set(":", "KC.COLN");
+Html2KMK.set("'", "KC.QUOT");
+Html2KMK.set("\"", "KC.DQT");
+Html2KMK.set("`", "KC.GRV");
+Html2KMK.set("~", "KC.TILD");
+Html2KMK.set(",", "KC.COMM");
+Html2KMK.set("<", "KC.LABK");
+Html2KMK.set(".", "KC.DOT");
+Html2KMK.set(">", "KC.RABK");
+Html2KMK.set("/", "KC.SLSH");
+Html2KMK.set("?", "KC.QUES");
+
+Html2KMK.set("!", "KC.EXLM");
+Html2KMK.set("@", "KC.AT");
+Html2KMK.set("#", "KC.HASH");
+Html2KMK.set("$", "KC.DLR");
+Html2KMK.set("%", "KC.PERC");
+Html2KMK.set("^", "KC.CIRC");
+Html2KMK.set("&", "KC.AMPR");
+Html2KMK.set("*", "KC.ASTR");
+Html2KMK.set("(", "KC.LPRN");
+Html2KMK.set(")", "KC.RPRN");
+
+Html2KMK.set("F1", "KC.F1");
+Html2KMK.set("F2", "KC.F2");
+Html2KMK.set("F3", "KC.F3");
+Html2KMK.set("F4", "KC.F4");
+Html2KMK.set("F5", "KC.F5");
+Html2KMK.set("F6", "KC.F6");
+Html2KMK.set("F7", "KC.F7");
+Html2KMK.set("F8", "KC.F8");
+Html2KMK.set("F9", "KC.F9");
+Html2KMK.set("F10", "KC.F10");
+Html2KMK.set("F11", "KC.F11");
+Html2KMK.set("F12", "KC.F12");
+
 Html2KMK.set("Control", "KC.LCTL");
 Html2KMK.set("Alt", "KC.LALT");
 Html2KMK.set("Meta", "KC.LGUI");
